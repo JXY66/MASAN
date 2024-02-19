@@ -1,11 +1,9 @@
-# LightSANs
-This is our Pytorch implementation for our SIGIR 2021 short paper:
-> Xinyan Fan, Zheng Liu, Jianxun Lian, Wayne Xin Zhao, Xing Xie, and Ji-Rong Wen (2021). "Lighter and Better: Low-Rank Decomposed Self-Attention Networks for Next-Item Recommendation." In SIGIR 2021.
-
+# MASAN
 ## Overview
-we propose the low-rank decomposed self-attention networks **LightSANs** to improve the effectiveness and efficiency of SANs-based recommenders. Particularly, it projects user's historical items into a small constant number of latent interests, and leverages item-to-interest interaction to generate the user history representation. Besides, the decoupled position encoding is introduced, which expresses the items’ sequential relationships much more precisely. The overall framework of LightSANs is depicted bellow.
+Aiming at the problems of the high computational complexity of self-attention and unableto accurately measure the importance of items in the existing session-based recommendation methods combined with self-attention,a multi-interest aware adaptive self-attention network model is proposed for session-based recommendation. The overall framework of MASAN is depicted bellow.
 
-<img src="https://github.com/BELIEVEfxy/LightSANs/blob/main/model.png" width = "500px" align=center />
+
+<img src="https://github.com/JXY66/MASAN/assets/91231446/e0638695-6e21-400e-a4e3-081cb64613d4" width = "500px" align=center />
 
 ## Requirements
 - Python 3.6
