@@ -1,0 +1,337 @@
+nohup: ignoring input
+28 Dec 02:24    INFO General Hyper Parameters: 
+gpu_id=0
+use_gpu=True
+seed=2020
+state=INFO
+reproducibility=True
+data_path=dataset/Amazon_Books
+
+Training Hyper Parameters: 
+checkpoint_dir=saved
+epochs=500
+train_batch_size=1024
+learner=adam
+learning_rate=0.003
+training_neg_sample_num=0
+eval_step=1
+stopping_step=10
+
+Evaluation Hyper Parameters: 
+eval_setting=TO_LS,full
+group_by_user=True
+leave_one_num=2
+real_time_process=True
+metrics=['Recall', 'MRR', 'NDCG', 'Hit', 'Precision']
+topk=[10]
+valid_metric=MRR@10
+eval_batch_size=2048
+
+Dataset Hyper Parameters: 
+field_separator=	
+seq_separator= 
+USER_ID_FIELD=user_id
+ITEM_ID_FIELD=item_id
+RATING_FIELD=rating
+TIME_FIELD=timestamp
+LABEL_FIELD=label
+threshold=None
+NEG_PREFIX=neg_
+load_col={'inter': ['user_id', 'item_id', 'rating', 'timestamp']}
+unload_col=None
+additional_feat_suffix=None
+max_user_inter_num=None
+min_user_inter_num=35
+max_item_inter_num=None
+min_item_inter_num=10
+lowest_val={'rating': 3}
+highest_val=None
+equal_val=None
+not_equal_val=None
+drop_filter_field=False
+fields_in_same_space=None
+fill_nan=True
+preload_weight=None
+drop_preload_weight=True
+normalize_field=None
+normalize_all=True
+ITEM_LIST_LENGTH_FIELD=item_length
+LIST_SUFFIX=_list
+MAX_ITEM_LIST_LENGTH=150
+POSITION_FIELD=position_id
+HEAD_ENTITY_ID_FIELD=head_id
+TAIL_ENTITY_ID_FIELD=tail_id
+RELATION_ID_FIELD=relation_id
+ENTITY_ID_FIELD=entity_id
+
+
+28 Dec 02:26    INFO Amazon_Books
+The number of users: 19214
+Average actions of users: 90.24795711237184
+The number of items: 60707
+Average actions of items: 28.56281092478503
+The number of inters: 1733934
+The sparsity of the dataset: 99.85134620369507%
+Remain Fields: ['user_id', 'item_id', 'rating', 'timestamp']
+28 Dec 02:26    INFO Build [ModelType.SEQUENTIAL] DataLoader for [train] with format [InputType.POINTWISE]
+28 Dec 02:26    INFO Evaluation Setting:
+	Group by user_id
+	Ordering: {'strategy': 'by', 'field': ['timestamp'], 'ascending': True}
+	Splitting: {'strategy': 'loo', 'leave_one_num': 2}
+	No Negative Sampling
+28 Dec 02:26    INFO batch_size = [[1024]], shuffle = [True]
+
+28 Dec 02:26    INFO Build [ModelType.SEQUENTIAL] DataLoader for [evaluation] with format [InputType.POINTWISE]
+28 Dec 02:26    INFO Evaluation Setting:
+	Group by user_id
+	Ordering: {'strategy': 'by', 'field': ['timestamp'], 'ascending': True}
+	Splitting: {'strategy': 'loo', 'leave_one_num': 2}
+	Negative Sampling: {'strategy': 'full', 'distribution': 'uniform'}
+28 Dec 02:26    INFO batch_size = [[2048, 2048]], shuffle = [False]
+
+28 Dec 02:26    INFO LightSANs(
+  (item_embedding): Embedding(60707, 64, padding_idx=0)
+  (position_embedding): Embedding(151, 64)
+  (trm_encoder): LightTransformerEncoder(
+    (layer): ModuleList(
+      (0): LightTransformerLayer(
+        (multi_head_attention): LightMultiHeadAttention(
+          (query): Linear(in_features=64, out_features=64, bias=True)
+          (key): Linear(in_features=64, out_features=64, bias=True)
+          (value): Linear(in_features=64, out_features=64, bias=True)
+          (attpooling_key): ItemToInterestAggregation()
+          (attpooling_value): ItemToInterestAggregation()
+          (pos_q_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_k_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_ln): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (attn_dropout): Dropout(p=0.5, inplace=False)
+          (dense): Linear(in_features=64, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (out_dropout): Dropout(p=0.5, inplace=False)
+          (alpha_w): Linear(in_features=64, out_features=1, bias=True)
+        )
+        (feed_forward): FeedForward(
+          (dense_1): Linear(in_features=64, out_features=256, bias=True)
+          (dense_2): Linear(in_features=256, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.5, inplace=False)
+        )
+      )
+      (1): LightTransformerLayer(
+        (multi_head_attention): LightMultiHeadAttention(
+          (query): Linear(in_features=64, out_features=64, bias=True)
+          (key): Linear(in_features=64, out_features=64, bias=True)
+          (value): Linear(in_features=64, out_features=64, bias=True)
+          (attpooling_key): ItemToInterestAggregation()
+          (attpooling_value): ItemToInterestAggregation()
+          (pos_q_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_k_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_ln): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (attn_dropout): Dropout(p=0.5, inplace=False)
+          (dense): Linear(in_features=64, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (out_dropout): Dropout(p=0.5, inplace=False)
+          (alpha_w): Linear(in_features=64, out_features=1, bias=True)
+        )
+        (feed_forward): FeedForward(
+          (dense_1): Linear(in_features=64, out_features=256, bias=True)
+          (dense_2): Linear(in_features=256, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.5, inplace=False)
+        )
+      )
+    )
+  )
+  (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+  (loss_fct): CrossEntropyLoss()
+)
+Trainable parameters: 4017154
+28 Dec 02:31    INFO epoch 0 training [time: 307.04s, train loss: 16014.6851]
+28 Dec 02:31    INFO epoch 0 evaluating [time: 1.92s, valid_score: 0.006700]
+28 Dec 02:31    INFO valid result: 
+recall@10 : 0.0191    mrr@10 : 0.0067    ndcg@10 : 0.0096    hit@10 : 0.0191    precision@10 : 0.0019    
+28 Dec 02:31    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 02:36    INFO epoch 1 training [time: 306.15s, train loss: 14114.4771]
+28 Dec 02:37    INFO epoch 1 evaluating [time: 1.88s, valid_score: 0.011100]
+28 Dec 02:37    INFO valid result: 
+recall@10 : 0.0364    mrr@10 : 0.0111    ndcg@10 : 0.0169    hit@10 : 0.0364    precision@10 : 0.0036    
+28 Dec 02:37    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 02:42    INFO epoch 2 training [time: 305.48s, train loss: 13465.8247]
+28 Dec 02:42    INFO epoch 2 evaluating [time: 1.87s, valid_score: 0.015200]
+28 Dec 02:42    INFO valid result: 
+recall@10 : 0.0449    mrr@10 : 0.0152    ndcg@10 : 0.0221    hit@10 : 0.0449    precision@10 : 0.0045    
+28 Dec 02:42    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 02:47    INFO epoch 3 training [time: 306.05s, train loss: 13124.1393]
+28 Dec 02:47    INFO epoch 3 evaluating [time: 1.84s, valid_score: 0.017600]
+28 Dec 02:47    INFO valid result: 
+recall@10 : 0.0537    mrr@10 : 0.0176    ndcg@10 : 0.0260    hit@10 : 0.0537    precision@10 : 0.0054    
+28 Dec 02:47    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 02:52    INFO epoch 4 training [time: 305.50s, train loss: 12900.4623]
+28 Dec 02:52    INFO epoch 4 evaluating [time: 1.86s, valid_score: 0.020800]
+28 Dec 02:52    INFO valid result: 
+recall@10 : 0.0600    mrr@10 : 0.0208    ndcg@10 : 0.0299    hit@10 : 0.0600    precision@10 : 0.0060    
+28 Dec 02:52    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 02:57    INFO epoch 5 training [time: 305.48s, train loss: 12745.4461]
+28 Dec 02:57    INFO epoch 5 evaluating [time: 1.91s, valid_score: 0.024400]
+28 Dec 02:57    INFO valid result: 
+recall@10 : 0.0704    mrr@10 : 0.0244    ndcg@10 : 0.0350    hit@10 : 0.0704    precision@10 : 0.0070    
+28 Dec 02:57    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 03:02    INFO epoch 6 training [time: 308.95s, train loss: 12625.7603]
+28 Dec 03:02    INFO epoch 6 evaluating [time: 1.93s, valid_score: 0.024300]
+28 Dec 03:02    INFO valid result: 
+recall@10 : 0.0718    mrr@10 : 0.0243    ndcg@10 : 0.0353    hit@10 : 0.0718    precision@10 : 0.0072    
+28 Dec 03:07    INFO epoch 7 training [time: 309.20s, train loss: 12525.6930]
+28 Dec 03:07    INFO epoch 7 evaluating [time: 2.12s, valid_score: 0.024300]
+28 Dec 03:07    INFO valid result: 
+recall@10 : 0.0739    mrr@10 : 0.0243    ndcg@10 : 0.0358    hit@10 : 0.0739    precision@10 : 0.0074    
+28 Dec 03:13    INFO epoch 8 training [time: 310.33s, train loss: 12452.8289]
+28 Dec 03:13    INFO epoch 8 evaluating [time: 1.92s, valid_score: 0.026000]
+28 Dec 03:13    INFO valid result: 
+recall@10 : 0.0764    mrr@10 : 0.0260    ndcg@10 : 0.0376    hit@10 : 0.0764    precision@10 : 0.0076    
+28 Dec 03:13    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 03:18    INFO epoch 9 training [time: 310.40s, train loss: 12389.4871]
+28 Dec 03:18    INFO epoch 9 evaluating [time: 1.92s, valid_score: 0.026300]
+28 Dec 03:18    INFO valid result: 
+recall@10 : 0.0806    mrr@10 : 0.0263    ndcg@10 : 0.0389    hit@10 : 0.0806    precision@10 : 0.0081    
+28 Dec 03:18    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 03:23    INFO epoch 10 training [time: 310.53s, train loss: 12331.5952]
+28 Dec 03:23    INFO epoch 10 evaluating [time: 1.93s, valid_score: 0.028900]
+28 Dec 03:23    INFO valid result: 
+recall@10 : 0.0847    mrr@10 : 0.0289    ndcg@10 : 0.0419    hit@10 : 0.0847    precision@10 : 0.0085    
+28 Dec 03:23    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 03:28    INFO epoch 11 training [time: 306.34s, train loss: 12288.0167]
+28 Dec 03:28    INFO epoch 11 evaluating [time: 1.88s, valid_score: 0.028600]
+28 Dec 03:28    INFO valid result: 
+recall@10 : 0.0834    mrr@10 : 0.0286    ndcg@10 : 0.0413    hit@10 : 0.0834    precision@10 : 0.0083    
+28 Dec 03:33    INFO epoch 12 training [time: 303.61s, train loss: 12245.3867]
+28 Dec 03:33    INFO epoch 12 evaluating [time: 1.89s, valid_score: 0.029800]
+28 Dec 03:33    INFO valid result: 
+recall@10 : 0.0882    mrr@10 : 0.0298    ndcg@10 : 0.0434    hit@10 : 0.0882    precision@10 : 0.0088    
+28 Dec 03:33    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 03:38    INFO epoch 13 training [time: 303.38s, train loss: 12206.0582]
+28 Dec 03:38    INFO epoch 13 evaluating [time: 1.87s, valid_score: 0.028300]
+28 Dec 03:38    INFO valid result: 
+recall@10 : 0.0858    mrr@10 : 0.0283    ndcg@10 : 0.0417    hit@10 : 0.0858    precision@10 : 0.0086    
+28 Dec 03:43    INFO epoch 14 training [time: 302.83s, train loss: 12173.1123]
+28 Dec 03:44    INFO epoch 14 evaluating [time: 1.87s, valid_score: 0.028400]
+28 Dec 03:44    INFO valid result: 
+recall@10 : 0.0875    mrr@10 : 0.0284    ndcg@10 : 0.0421    hit@10 : 0.0875    precision@10 : 0.0087    
+28 Dec 03:49    INFO epoch 15 training [time: 300.94s, train loss: 12143.6437]
+28 Dec 03:49    INFO epoch 15 evaluating [time: 1.87s, valid_score: 0.028800]
+28 Dec 03:49    INFO valid result: 
+recall@10 : 0.0862    mrr@10 : 0.0288    ndcg@10 : 0.0422    hit@10 : 0.0862    precision@10 : 0.0086    
+28 Dec 03:54    INFO epoch 16 training [time: 302.66s, train loss: 12117.7198]
+28 Dec 03:54    INFO epoch 16 evaluating [time: 1.87s, valid_score: 0.028700]
+28 Dec 03:54    INFO valid result: 
+recall@10 : 0.0869    mrr@10 : 0.0287    ndcg@10 : 0.0423    hit@10 : 0.0869    precision@10 : 0.0087    
+28 Dec 03:59    INFO epoch 17 training [time: 301.18s, train loss: 12094.1710]
+28 Dec 03:59    INFO epoch 17 evaluating [time: 1.88s, valid_score: 0.029300]
+28 Dec 03:59    INFO valid result: 
+recall@10 : 0.0892    mrr@10 : 0.0293    ndcg@10 : 0.0433    hit@10 : 0.0892    precision@10 : 0.0089    
+28 Dec 04:04    INFO epoch 18 training [time: 302.13s, train loss: 12073.4780]
+28 Dec 04:04    INFO epoch 18 evaluating [time: 1.88s, valid_score: 0.030800]
+28 Dec 04:04    INFO valid result: 
+recall@10 : 0.0917    mrr@10 : 0.0308    ndcg@10 : 0.0449    hit@10 : 0.0917    precision@10 : 0.0092    
+28 Dec 04:04    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 04:09    INFO epoch 19 training [time: 301.39s, train loss: 12049.3608]
+28 Dec 04:09    INFO epoch 19 evaluating [time: 1.87s, valid_score: 0.031400]
+28 Dec 04:09    INFO valid result: 
+recall@10 : 0.0930    mrr@10 : 0.0314    ndcg@10 : 0.0457    hit@10 : 0.0930    precision@10 : 0.0093    
+28 Dec 04:09    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 04:14    INFO epoch 20 training [time: 301.82s, train loss: 12035.8108]
+28 Dec 04:14    INFO epoch 20 evaluating [time: 1.87s, valid_score: 0.029500]
+28 Dec 04:14    INFO valid result: 
+recall@10 : 0.0898    mrr@10 : 0.0295    ndcg@10 : 0.0435    hit@10 : 0.0898    precision@10 : 0.0090    
+28 Dec 04:19    INFO epoch 21 training [time: 301.45s, train loss: 12018.9749]
+28 Dec 04:19    INFO epoch 21 evaluating [time: 1.87s, valid_score: 0.029400]
+28 Dec 04:19    INFO valid result: 
+recall@10 : 0.0895    mrr@10 : 0.0294    ndcg@10 : 0.0434    hit@10 : 0.0895    precision@10 : 0.0090    
+28 Dec 04:24    INFO epoch 22 training [time: 300.50s, train loss: 11998.2664]
+28 Dec 04:24    INFO epoch 22 evaluating [time: 1.88s, valid_score: 0.029700]
+28 Dec 04:24    INFO valid result: 
+recall@10 : 0.0928    mrr@10 : 0.0297    ndcg@10 : 0.0444    hit@10 : 0.0928    precision@10 : 0.0093    
+28 Dec 04:29    INFO epoch 23 training [time: 301.72s, train loss: 11980.7034]
+28 Dec 04:29    INFO epoch 23 evaluating [time: 1.87s, valid_score: 0.030800]
+28 Dec 04:29    INFO valid result: 
+recall@10 : 0.0940    mrr@10 : 0.0308    ndcg@10 : 0.0455    hit@10 : 0.0940    precision@10 : 0.0094    
+28 Dec 04:34    INFO epoch 24 training [time: 300.88s, train loss: 11975.7662]
+28 Dec 04:34    INFO epoch 24 evaluating [time: 1.87s, valid_score: 0.030500]
+28 Dec 04:34    INFO valid result: 
+recall@10 : 0.0938    mrr@10 : 0.0305    ndcg@10 : 0.0452    hit@10 : 0.0938    precision@10 : 0.0094    
+28 Dec 04:39    INFO epoch 25 training [time: 301.34s, train loss: 11962.1267]
+28 Dec 04:39    INFO epoch 25 evaluating [time: 1.86s, valid_score: 0.031000]
+28 Dec 04:39    INFO valid result: 
+recall@10 : 0.0963    mrr@10 : 0.0310    ndcg@10 : 0.0461    hit@10 : 0.0963    precision@10 : 0.0096    
+28 Dec 04:44    INFO epoch 26 training [time: 302.33s, train loss: 11944.8899]
+28 Dec 04:44    INFO epoch 26 evaluating [time: 1.86s, valid_score: 0.030900]
+28 Dec 04:44    INFO valid result: 
+recall@10 : 0.0937    mrr@10 : 0.0309    ndcg@10 : 0.0455    hit@10 : 0.0937    precision@10 : 0.0094    
+28 Dec 04:49    INFO epoch 27 training [time: 301.11s, train loss: 11934.7137]
+28 Dec 04:49    INFO epoch 27 evaluating [time: 1.88s, valid_score: 0.031100]
+28 Dec 04:49    INFO valid result: 
+recall@10 : 0.0959    mrr@10 : 0.0311    ndcg@10 : 0.0462    hit@10 : 0.0959    precision@10 : 0.0096    
+28 Dec 04:54    INFO epoch 28 training [time: 300.63s, train loss: 11920.0898]
+28 Dec 04:54    INFO epoch 28 evaluating [time: 1.86s, valid_score: 0.031000]
+28 Dec 04:54    INFO valid result: 
+recall@10 : 0.0963    mrr@10 : 0.0310    ndcg@10 : 0.0462    hit@10 : 0.0963    precision@10 : 0.0096    
+28 Dec 04:59    INFO epoch 29 training [time: 300.56s, train loss: 11908.8336]
+28 Dec 04:59    INFO epoch 29 evaluating [time: 1.86s, valid_score: 0.031400]
+28 Dec 04:59    INFO valid result: 
+recall@10 : 0.0939    mrr@10 : 0.0314    ndcg@10 : 0.0460    hit@10 : 0.0939    precision@10 : 0.0094    
+28 Dec 05:04    INFO epoch 30 training [time: 299.83s, train loss: 11936.3193]
+28 Dec 05:04    INFO epoch 30 evaluating [time: 1.85s, valid_score: 0.033100]
+28 Dec 05:04    INFO valid result: 
+recall@10 : 0.1006    mrr@10 : 0.0331    ndcg@10 : 0.0488    hit@10 : 0.1006    precision@10 : 0.0101    
+28 Dec 05:04    INFO Saving current best: saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 05:09    INFO epoch 31 training [time: 299.58s, train loss: 11896.2590]
+28 Dec 05:09    INFO epoch 31 evaluating [time: 2.06s, valid_score: 0.031000]
+28 Dec 05:09    INFO valid result: 
+recall@10 : 0.0946    mrr@10 : 0.0310    ndcg@10 : 0.0458    hit@10 : 0.0946    precision@10 : 0.0095    
+28 Dec 05:14    INFO epoch 32 training [time: 304.17s, train loss: 11889.4660]
+28 Dec 05:15    INFO epoch 32 evaluating [time: 1.85s, valid_score: 0.032100]
+28 Dec 05:15    INFO valid result: 
+recall@10 : 0.0994    mrr@10 : 0.0321    ndcg@10 : 0.0478    hit@10 : 0.0994    precision@10 : 0.0099    
+28 Dec 05:20    INFO epoch 33 training [time: 306.37s, train loss: 11872.6653]
+28 Dec 05:20    INFO epoch 33 evaluating [time: 1.86s, valid_score: 0.030400]
+28 Dec 05:20    INFO valid result: 
+recall@10 : 0.0955    mrr@10 : 0.0304    ndcg@10 : 0.0456    hit@10 : 0.0955    precision@10 : 0.0095    
+28 Dec 05:25    INFO epoch 34 training [time: 305.32s, train loss: 11859.2109]
+28 Dec 05:25    INFO epoch 34 evaluating [time: 1.84s, valid_score: 0.031800]
+28 Dec 05:25    INFO valid result: 
+recall@10 : 0.0967    mrr@10 : 0.0318    ndcg@10 : 0.0469    hit@10 : 0.0967    precision@10 : 0.0097    
+28 Dec 05:30    INFO epoch 35 training [time: 296.63s, train loss: 11848.9882]
+28 Dec 05:30    INFO epoch 35 evaluating [time: 1.87s, valid_score: 0.031000]
+28 Dec 05:30    INFO valid result: 
+recall@10 : 0.0961    mrr@10 : 0.0310    ndcg@10 : 0.0461    hit@10 : 0.0961    precision@10 : 0.0096    
+28 Dec 05:35    INFO epoch 36 training [time: 300.05s, train loss: 11851.5610]
+28 Dec 05:35    INFO epoch 36 evaluating [time: 1.87s, valid_score: 0.031700]
+28 Dec 05:35    INFO valid result: 
+recall@10 : 0.0967    mrr@10 : 0.0317    ndcg@10 : 0.0469    hit@10 : 0.0967    precision@10 : 0.0097    
+28 Dec 05:40    INFO epoch 37 training [time: 299.01s, train loss: 11841.3383]
+28 Dec 05:40    INFO epoch 37 evaluating [time: 1.86s, valid_score: 0.032900]
+28 Dec 05:40    INFO valid result: 
+recall@10 : 0.1012    mrr@10 : 0.0329    ndcg@10 : 0.0488    hit@10 : 0.1012    precision@10 : 0.0101    
+28 Dec 05:45    INFO epoch 38 training [time: 299.95s, train loss: 11835.4420]
+28 Dec 05:45    INFO epoch 38 evaluating [time: 1.87s, valid_score: 0.032600]
+28 Dec 05:45    INFO valid result: 
+recall@10 : 0.1022    mrr@10 : 0.0326    ndcg@10 : 0.0487    hit@10 : 0.1022    precision@10 : 0.0102    
+28 Dec 05:50    INFO epoch 39 training [time: 301.07s, train loss: 11829.9359]
+28 Dec 05:50    INFO epoch 39 evaluating [time: 1.86s, valid_score: 0.032000]
+28 Dec 05:50    INFO valid result: 
+recall@10 : 0.0990    mrr@10 : 0.0320    ndcg@10 : 0.0475    hit@10 : 0.0990    precision@10 : 0.0099    
+28 Dec 05:55    INFO epoch 40 training [time: 301.96s, train loss: 11835.6605]
+28 Dec 05:55    INFO epoch 40 evaluating [time: 1.88s, valid_score: 0.032600]
+28 Dec 05:55    INFO valid result: 
+recall@10 : 0.1000    mrr@10 : 0.0326    ndcg@10 : 0.0483    hit@10 : 0.1000    precision@10 : 0.0100    
+28 Dec 06:00    INFO epoch 41 training [time: 303.60s, train loss: 11890.1656]
+28 Dec 06:00    INFO epoch 41 evaluating [time: 1.90s, valid_score: 0.032100]
+28 Dec 06:00    INFO valid result: 
+recall@10 : 0.1013    mrr@10 : 0.0321    ndcg@10 : 0.0482    hit@10 : 0.1013    precision@10 : 0.0101    
+28 Dec 06:00    INFO Finished training, best eval result in epoch 30
+28 Dec 06:00    INFO Loading model structure and parameters from saved/LightSANs-Dec-28-2021_02-26-43.pth
+28 Dec 06:00    INFO best valid result: {'recall@10': 0.1006, 'mrr@10': 0.0331, 'ndcg@10': 0.0488, 'hit@10': 0.1006, 'precision@10': 0.0101}
+28 Dec 06:00    INFO test result: {'recall@10': 0.0793, 'mrr@10': 0.0268, 'ndcg@10': 0.039, 'hit@10': 0.0793, 'precision@10': 0.0079}
+28 Dec 06:00    INFO total training and evaluating time: 12829.347715854645
+28 Dec 06:00    INFO avg time of training an epoch: 303.3204515434447
+28 Dec 06:00    INFO inference time: 1.8847732543945312
